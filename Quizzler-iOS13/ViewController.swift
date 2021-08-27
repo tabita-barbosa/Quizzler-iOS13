@@ -10,11 +10,50 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    
+    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var trueButton: UIButton!
+    @IBOutlet weak var falseButton: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
+    
+    let quiz = [
+        [ "4 + 2 é igual a 6", "True"],
+        [ "5 - 3 é maior que 1", "True"],
+        [ "3 + 8 é menos que 10", "False"]
+    ]
+    // vai ser o tracker de qual pergunta o usuário esta
+    var questionIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        updateUI()
     }
 
-
+    
+    @IBAction func answerButtonPressed(_ sender: UIButton) {
+        // primeiro track na ação do usuário
+        let userAnswer = sender.currentTitle
+        
+        let rightAnswer = quiz[questionIndex][1]
+        
+        if userAnswer == rightAnswer {
+            print("resposta certa")
+        } else {
+            print("errou!")
+        }
+        
+        if questionIndex + 1 < quiz.count {
+            questionIndex += 1
+        } else {
+            questionIndex = 0
+        }
+        
+        updateUI()
+        
+    }
+    
+    func updateUI(){
+        questionLabel.text = quiz[questionIndex][0]
+    }
 }
 
